@@ -1,0 +1,14 @@
+{
+  "name": "node-angular2-start",
+  "version": "1.0.0",
+
+  "scripts": {
+    "start" : "concurrently \"cd client && npm run start\" \"node server/app.js\" ",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w"
+  },
+
+  "devDependencies": {
+    "concurrently": "^3.2.0"
+  }
+}

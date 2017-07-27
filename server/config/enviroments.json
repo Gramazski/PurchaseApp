@@ -1,0 +1,7 @@
+{
+  "serverPort": 4000,
+  "whiteList": ["http://localhost:3000"],
+  "secret": "MY OWN SECRET KEY",
+  "unprotectedRoutes": ["/users/login", "/users/register", "/assets/i"],
+  "assetsExt": ["json"]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "node-angular2-server",
+  "version": "1.0.0",
+
+  "scripts": {
+    "start" : "\"node app.js\" ",
+    "test" : "\"nodemon app.js\" "
+  },
+
+  "dependencies": {
+    "express" : "latest",
+    "nodemon" : "1.11.0",
+    "body-parser" : "1.17.2",
+    "cors" : "^2.8.4",
+    "express-jwt": "^5.3.0",
+    "jsonwebtoken": "^7.4.1",
+    "express-unless": "^0.3.0"
+  }
+}
