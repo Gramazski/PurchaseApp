@@ -7,6 +7,7 @@ import { FormsModule }   from '@angular/forms';
 import {HttpModule, Http} from '@angular/http';
 import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {CookieModule} from 'ngx-cookie';
 
 import { AppComponent }   from './app.component';
 import {LoginService} from "./login/login.service";
@@ -26,6 +27,9 @@ import {ProductListComponent} from "./products/product-list/product-list.compone
 import {ProductSpecsComponent} from "./products/product-specs/product-specs.component";
 import {ProductOverviewComponent} from "./products/product-overview/product-overview.component";
 import {ProductComponent} from "./products/product/product.component";
+import {LangSelectorService} from "./shared/lang-selector/lang-selector.service";
+import {LangSelectorComponent} from "./shared/lang-selector/lang-selector.component";
+import {LangsLoaderService} from "./shared/lang-selector/langs-loader.service";
 
 @NgModule({
     imports:      [ BrowserModule, FormsModule, HttpModule, routing, TranslateModule.forRoot({
@@ -34,18 +38,15 @@ import {ProductComponent} from "./products/product/product.component";
             useFactory: (http: Http) => new TranslateHttpLoader(http, '/i18n/', '.json'),
             deps: [Http]
         }
-    }) ],
-    providers: [LoginService, RegisterService, ProductService, UserGuard, customHttpProvider, AlertService, LoggedControlService],
+    }), CookieModule.forRoot() ],
+    providers: [LoginService, RegisterService, ProductService, UserGuard, customHttpProvider, AlertService, LoggedControlService, LangSelectorService, LangsLoaderService],
     declarations: [ AppComponent, RegisterComponent, LoginComponent, HomeComponent, TopMenuComponent, AlertComponent, ProductListComponent,
-        ProductSpecsComponent, ProductOverviewComponent, ProductComponent ],
+        ProductSpecsComponent, ProductOverviewComponent, ProductComponent, LangSelectorComponent ],
     bootstrap:    [ AppComponent ]
 })
 export class AppModule {
-    constructor(translate: TranslateService) {
+    constructor(langSelectorService: LangSelectorService) {
         // this language will be used as a fallback when a translation isn't found in the current language
-        translate.setDefaultLang('ru');
-
-        // the lang to use, if the lang isn't available, it will use the current loader to get them
-        translate.use('ru');
+        langSelectorService.setNewLang(langSelectorService.getStartLang());
     }
 }
