@@ -3,5 +3,6 @@
   "whiteList": ["http://localhost:3000"],
   "secret": "MY OWN SECRET KEY",
   "unprotectedRoutes": ["/users/login", "/users/register", "/assets/i"],
-  "assetsExt": ["json"]
+  "assetsExt": ["json"],
+  "dbUrl": "mongodb://localhost:27017/purchasedb"
 }

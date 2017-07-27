@@ -11,6 +11,7 @@ var corsOptions = require('./config/cors');
 var routes = require('./config/user.routes');
 var productService = require('./service/product.service');
 var secure = require('./config/secure');
+var db = require('./config/db');
 
 var app = express();
 
@@ -24,11 +25,24 @@ app.use(express.static('assets'));
 app.use(expressJwt(secure).unless({path: config.unprotectedRoutes, ext: config.assetsExt}));
 
 app.use("/products", function (req, resp) {
-    resp.send(JSON.stringify(productService.getAllProducts()));
+    productService.getAllProducts()
+        .then(function (value) {
+            resp.send(JSON.stringify(value));
+        })
+        .catch(function (err) {
+            resp.status(400).send(err);
+        });
 });
 
 app.use("/users", routes);
 
-app.listen(config.serverPort, function () {
-    console.log("Server started on " + config.serverPort);
+db.connect(config.dbUrl, function(err) {
+    if (err) {
+        console.log('Unable to connect to Mongo.');
+        process.exit(1);
+    } else {
+        app.listen(config.serverPort, function () {
+            console.log("Server started on " + config.serverPort);
+        });
+    }
 });
