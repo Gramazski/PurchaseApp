@@ -8,8 +8,8 @@ var expressJwt = require('express-jwt');
 
 var config = require('./config/enviroments.json');
 var corsOptions = require('./config/cors');
-var routes = require('./config/user.routes');
-var productService = require('./service/product.service');
+var authRoutes = require('./routes/user.routes.js');
+var productRoutes = require('./routes/product.routes');
 var secure = require('./config/secure');
 var db = require('./config/db');
 
@@ -24,17 +24,8 @@ app.use(express.static('assets'));
 
 app.use(expressJwt(secure).unless({path: config.unprotectedRoutes, ext: config.assetsExt}));
 
-app.use("/products", function (req, resp) {
-    productService.getAllProducts()
-        .then(function (value) {
-            resp.send(JSON.stringify(value));
-        })
-        .catch(function (err) {
-            resp.status(400).send(err);
-        });
-});
-
-app.use("/users", routes);
+app.use("/products", productRoutes);
+app.use("/users", authRoutes);
 
 db.connect(config.dbUrl, function(err) {
     if (err) {
