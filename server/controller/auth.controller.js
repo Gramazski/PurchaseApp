@@ -13,7 +13,7 @@ controller.authenticate = function (req, res) {
     userService.findByUsername(req.body.username)
         .then(function (value) {
             console.log(value);
-            if (value.password == req.body.password){
+            if (value != null && value.password == req.body.password){
                 value.token = jwt.sign({ sub: req.body.username }, config.secret);
                 res.status(200).send(JSON.stringify(value));
             }
