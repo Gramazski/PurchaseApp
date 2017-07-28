@@ -13,14 +13,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  */
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
+var product_model_1 = require("../shared/product.model");
+var product_service_1 = require("../shared/product.service");
 var ProductComponent = (function () {
-    function ProductComponent(route) {
+    function ProductComponent(route, productService) {
         this.route = route;
+        this.productService = productService;
+        this.product = new product_model_1.Product("none", 10);
     }
     ProductComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.sub = this.route.params.subscribe(function (params) {
-            _this.id = +params['id']; // (+) converts string 'id' to a number
+            _this.productService.getProduct(params['id']).subscribe(function (data) {
+                _this.product = data.json();
+            });
         });
     };
     ProductComponent.prototype.ngOnDestroy = function () {
@@ -33,7 +39,7 @@ ProductComponent = __decorate([
         selector: 'product',
         templateUrl: './src/app/products/product/product.component.html'
     }),
-    __metadata("design:paramtypes", [router_1.ActivatedRoute])
+    __metadata("design:paramtypes", [router_1.ActivatedRoute, product_service_1.ProductService])
 ], ProductComponent);
 exports.ProductComponent = ProductComponent;
 //# sourceMappingURL=product.component.js.map

@@ -12,16 +12,9 @@ export class RegisterService {
     constructor(private http: Http, private loggedControlService: LoggedControlService){}
 
     create(user: User) {
-        return this.http.post('/users/register', user)
+        return this.http.post('/users/register', {"user": user})
             .map((response: Response) => {
-                let user = response.json();
-
-                if (user) {
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                    this.loggedControlService.isLoggedIn = true;
-                }
-
-                return user;
+                return response.json();
             });
     }
 }

@@ -24,5 +24,13 @@ function findByUsername(username) {
 }
 
 function create(userParam) {
-    return !(userParam.username == "user" && userParam.password == "pass");
+    var deferred = Q.defer();
+
+    db.get().collection("users").insertOne(userParam, function (err, result) {
+        if (err) deferred.reject(err.name + ': ' + err.message);
+
+        deferred.resolve(result);
+    });
+
+    return deferred.promise;
 }

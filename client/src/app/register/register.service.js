@@ -20,15 +20,9 @@ var RegisterService = (function () {
         this.loggedControlService = loggedControlService;
     }
     RegisterService.prototype.create = function (user) {
-        var _this = this;
-        return this.http.post('/users/register', user)
+        return this.http.post('/users/register', { "user": user })
             .map(function (response) {
-            var user = response.json();
-            if (user) {
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                _this.loggedControlService.isLoggedIn = true;
-            }
-            return user;
+            return response.json();
         });
     };
     return RegisterService;

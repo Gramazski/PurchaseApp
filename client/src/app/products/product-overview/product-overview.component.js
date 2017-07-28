@@ -20,7 +20,7 @@ var ProductOverviewComponent = (function () {
     ProductOverviewComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.sub = this.route.parent.params.subscribe(function (params) {
-            _this.parentRouteId = +params["id"];
+            _this.parentRouteId = params["id"];
         });
     };
     ProductOverviewComponent.prototype.ngOnDestroy = function () {

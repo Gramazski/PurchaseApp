@@ -11,13 +11,13 @@ import {Router, ActivatedRoute} from "@angular/router";
 export class ProductOverviewComponent implements OnInit, OnDestroy{
     private sub: any;
 
-    private parentRouteId: number;
+    private parentRouteId: string;
 
     constructor(private route: ActivatedRoute) { }
 
     ngOnInit() {
         this.sub = this.route.parent.params.subscribe(params => {
-            this.parentRouteId = +params["id"];
+            this.parentRouteId = params["id"];
         });
     }
 

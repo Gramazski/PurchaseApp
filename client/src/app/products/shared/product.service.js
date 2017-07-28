@@ -20,6 +20,9 @@ var ProductService = (function () {
     ProductService.prototype.getAllProducts = function () {
         return this.http.get("/products");
     };
+    ProductService.prototype.getProduct = function (id) {
+        return this.http.get("/products/" + id);
+    };
     return ProductService;
 }());
 ProductService = __decorate([
